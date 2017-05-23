@@ -24,6 +24,15 @@
             android:layout_marginLeft="10dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"/>
+
+        <CheckBox
+            android:id="@+id/aupdate_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="18dp"
+            android:text="自动更新" />
     </RelativeLayout>
     <ListView
         android:id="@+id/list_view"

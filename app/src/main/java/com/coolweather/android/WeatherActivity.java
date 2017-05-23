@@ -184,8 +184,7 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
-        Intent intent=new Intent(this, AutoUpdateService.class);
-        startService(intent);
+        AutoUpdate();
     }
     public void loadBingPic(){
         String requestBingPic="http://guolin.tech/api/bing_pic";
@@ -209,5 +208,18 @@ public class WeatherActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+    public void AutoUpdate(){
+        int i=getIntent().getIntExtra("int_data",0);
+        if (i==1){
+            Intent intent=new Intent(this, AutoUpdateService.class);
+            startService(intent);
+            ChooseAreaFragment.checkBox.setChecked(true);
+        }else {
+            Intent intent=new Intent(this, AutoUpdateService.class);
+            stopService(intent);
+            ChooseAreaFragment.checkBox.setChecked(false);
+        }
+
     }
 }

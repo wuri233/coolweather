@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import com.coolweather.android.db.City;
 import com.coolweather.android.db.County;
 import com.coolweather.android.db.Province;
+import com.coolweather.android.service.AutoUpdateService;
 import com.coolweather.android.util.HttpUtil;
 import com.coolweather.android.util.Utility;
 
@@ -44,6 +47,7 @@ public class ChooseAreaFragment extends Fragment {
     private TextView titleText;
     private Button backButton;
     private ListView listView;
+    public static CheckBox checkBox;
     private ArrayAdapter<String> adapter;
     private List<String> dataList = new ArrayList<>();
     /**
@@ -78,6 +82,7 @@ public class ChooseAreaFragment extends Fragment {
         titleText = (TextView) view.findViewById(R.id.title_text);
         backButton = (Button) view.findViewById(R.id.back_button);
         listView = (ListView) view.findViewById(R.id.list_view);
+        checkBox=(CheckBox)view.findViewById(R.id.aupdate_check);
         adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, dataList);
         listView.setAdapter(adapter);
         return view;
@@ -111,6 +116,27 @@ public class ChooseAreaFragment extends Fragment {
                 }
             }
         });
+        if (getActivity() instanceof WeatherActivity) {
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("int_data", 1);
+                        startActivity(intent);
+
+                    } else {
+                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("int_data", 0);
+                        startActivity(intent);
+
+                    }
+                }
+            });
+        }else if (getActivity() instanceof MainActivity){
+            checkBox.setChecked(false);
+            checkBox.setClickable(false);
+        }
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
